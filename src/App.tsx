@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AuthProvider } from '@/context/AuthContext';
 import { Navbar } from '@/components/Navbar';
 import { AuthModal } from '@/components/AuthModal';
@@ -15,14 +15,14 @@ function AppContent() {
   const [authOpen, setAuthOpen] = useState(false);
 
   // Listen for navigation events from other components (e.g. FoldersPage "browse" button)
-  useState(() => {
+  useEffect(() => {
     const handler = (e: Event) => {
       const detail = (e as CustomEvent).detail as View;
       if (detail) setView(detail);
     };
     window.addEventListener('navigate', handler);
     return () => window.removeEventListener('navigate', handler);
-  });
+  }, []);
 
   return (
     <div className="min-h-screen bg-white text-ink-900">
